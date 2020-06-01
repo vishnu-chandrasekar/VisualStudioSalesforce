@@ -1,0 +1,113 @@
+<template>
+  <!--table style="width:100%">
+    <tr>
+      <th style="padding:1rem;background-color:blue;border:3px solid white;color: white;">Resources</th>
+      <template for:each={calenderdata} for:item="day">
+        <th style="padding:1rem;background-color:blue;border:3px solid white;color: white;" key={day}>{day}</th>
+      </template>
+    </tr>
+    <tr>
+      <template for:each={dup_resourcedata} for:item="data">
+        <td style="padding:1rem;background-color:blue;border:3px solid white;color: white;" key={data.sourcename}>
+          {data.sourcename}</td>
+        <template for:each={data.week_data} for:item="days">
+          <td colspan={days.colspan} style="padding:1rem;background-color:blue;border:3px solid white;color: white;"
+            key={days.Destionationname}>
+            <template for:each={data.week_data} for:item="days">
+              <div key={days.colspan} class=""
+                style="border: 3px solid blue;background-color: white; text-align: center;color: blue;">
+                {days.Destionationname}</div>
+            </template>
+          </td>
+        </template>
+      </template>
+    </tr>
+  </table-->
+
+
+  <div class="slds-scope">
+    <div class="slds-card slds-theme_default">
+     
+
+      <!-- Gantt Chart -->
+      <div class="slds-scrollable_x">
+        <div class="slds-p-around_medium lwc-chart_container">
+          <!-- Timeline -->
+          <div class="slds-grid lwc-timeline">
+            <div
+              if:false={isResourceView}
+              class="slds-col slds-size_1-of-6 slds-align-bottom "
+            >
+              <div class="slds-text-heading_medium slds-p-around_small">
+                Resources
+              </div>
+            </div>
+            <div class="slds-col">
+              <div class="slds-grid">
+                <template for:each={dates} for:item="date">
+                  <div
+                    key={date.name}
+                    class="slds-col lwc-timeline_month-container"
+                    style={date.style}
+                  >
+                    <div class="slds-grid">
+                      <div class="slds-col slds-has-flexi-truncate">
+                        <div
+                          class="lwc-timeline_month slds-p-around_xx-small slds-theme_shade slds-text-align_center slds-text-color_weak slds-text-body_small slds-m-horizontal_x-small slds-truncate"
+                        >
+                          {date.name}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="slds-grid">
+                      <template for:each={date.days} for:item="day">
+                        <div key={day.label} class={day.class}>
+                          <div if:true={day.dayName}>{day.dayName}</div>
+                          <div>{day.label}</div>
+                        </div>
+                      </template>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </div>
+          <!-- /Timeline -->
+
+          <!-- Allocation Table -->
+          <!-- Resource Rows -->
+          <template if:true={resources.length}>
+            <template for:each={resources} for:item="resource">
+              <c-gantt-chart-allocation
+                key={resource.Id}
+                class="lwc-resource-component"
+                isresourceview={isResourceView}
+                resource={resource}
+                date-increment={viewslotSize}
+                start-date={startDate}
+                end-date={endDate}
+              ></c-gantt-chart-allocation>
+            </template>
+          </template>
+          <!-- /Resource Rows -->
+
+          <!-- Empty State -->
+          <div
+            if:false={resources.length}
+            class="slds-text-align_center slds-p-around_medium"
+          >
+            <span class="slds-text-color_weak">No Resources to Show</span>
+          </div>
+          <!-- /Empty State -->
+          <!-- /Allocation Table -->
+
+          
+        </div>
+      </div>
+      <!-- /Gantt Chart -->
+    </div>
+  </div>
+
+
+ 
+</template>
